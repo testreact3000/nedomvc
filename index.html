@@ -3,26 +3,23 @@
 <head>
 	<title></title>
 	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-	<meta charset="UTF-8">
+    <meta charset="UTF-8">
 	<style>
-         body{font-size: 16pt;}
-         .notes__table{
-	   border-collapse:collapse;	 
-	   border: 1px solid black;
-	 }
+      body{font-size: 16pt;}
+      .notes__table{
+	       border-collapse:collapse;	 
+      }
 	 .pagination__item{
-	 /*  border: 1px solid grey;
-	   display: inline-block;
-	   width: 1em;
-	   height: 1em;
-	   text-decoration: none;
-	   text-align: center;*/
+
 	 }
 	 .pagination__item_hidden{
 	   display: none;
 	 }
 	 .container__list{
 	 }
+     .container_hidden{
+         visibility: hidden;
+     }
 	 .container__form{
 	 }
 	 .container__form label{
@@ -32,7 +29,7 @@
         </style>
 </head>
 <body>    
-        <div class="container container__login container_hidden">
+        <div class="container container__login">
 		<form method="POST" class="login-form" autocomplete="on">
 		  <label><div class="label">Login:</div><input type="text" name="login"></label>
 		  <label><div class="label">Password:</div><input type="password" name="password"></label>
@@ -51,11 +48,11 @@
 	   <tbody>
 	   <thead class="thead">
 		   <tr class="sort__row"><th class="sort__id"><a href="#"  class="sort__link" data-sortby="id">id</a></th>
-			   <th class="sort__name"><a href="#" class="sort__link" data-sortby="name">name</a></th>
-			   <th class="sort__email"><a href="#" class="sort__link" data-sortby="email">email</a></th>
-			   <th class="sort__text">text</th>
-			   <th class="sort__status"><a href="#" class="sort__link" data-sortby="status">status</a></th>
-			   </tr>
+			<th class="sort__name"><a href="#" class="sort__link" data-sortby="name">name</a></th>
+			<th class="sort__email"><a href="#" class="sort__link" data-sortby="email">email</a></th>
+			<th class="sort__text">text</th>
+			<th class="sort__status"><a href="#" class="sort__link" data-sortby="status">status</a></th>
+			</tr>
 	   </thead>	   
            <tbody class="notes__list">
 	   </tbody>	   
@@ -85,12 +82,13 @@
                 var sort="desc";
                 var list = document.getElementsByClassName('notes__list')[0];
                 var table = document.getElementsByClassName('notes__table')[0];
+                var login = document.getElementsByClassName('container__login')[0];
                 var page = 1;
                 var editable=false;
                 var pgn;                
                 function item(strings ){
 	             
-		}
+		        }
                 function renderList(data){
 			if(editable){
 			   table.classList.add('notes__table_editable')
@@ -162,7 +160,7 @@
 			   }	   
 			   list.appendChild(tr);
 			  });
-		 // list.innerHTML(y);
+		 
 		}
                 function renderEmptyList(){
 		  //pagination.classList.add('notes__pagination_hidden');
@@ -176,17 +174,17 @@
 	            constructor(){
 		     this.pages=0;
 		     this.page=1;	    
-                     this.pagination = document.getElementsByClassName('notes__pagination');
-                     this.first = document.getElementsByClassName('pagination__first');
-                     this.prev = document.getElementsByClassName('pagination__prev');
-                     this.current = document.getElementsByClassName('pagination__current');
-                     this.next = document.getElementsByClassName('pagination__next');
-                     this.last = document.getElementsByClassName('pagination__last');
+               this.pagination = document.getElementsByClassName('notes__pagination');
+               this.first = document.getElementsByClassName('pagination__first');
+               this.prev = document.getElementsByClassName('pagination__prev');
+               this.current = document.getElementsByClassName('pagination__current');
+               this.next = document.getElementsByClassName('pagination__next');
+               this.last = document.getElementsByClassName('pagination__last');
 		     	    
-                     var paginationItem=document.getElementsByClassName('pagination__item');
-                     for(let i=0;i<paginationItem.length;i++){
-		       paginationItem[i].addEventListener('click',function(e){
-			 e.preventDefault();     
+               var paginationItem=document.getElementsByClassName('pagination__item');
+               for(let i=0;i<paginationItem.length;i++){
+		         paginationItem[i].addEventListener('click',function(e){
+			     e.preventDefault();     
 		         load(e.target.dataset.page,sortby,sort);
 		       })
 		     }
@@ -195,59 +193,58 @@
                   update (page, pages){
 		    if( pages < 2  ){
 		      if(this.pages > 1){
-			for(let i = 0; i<this.pagination.length; i++){
+			    for(let i = 0; i<this.pagination.length; i++){
 		           this.pagination[i].classList.add('pagination_hidden');
 		        }
 		      }
 		    }else{
-                      this.updateFirst(page,pages);
-	              this.updatePrev(page,pages);
-	              this.updateCurrent(page,pages);
-	              this.updateNext(page,pages);
-	              this.updateLast(page,pages);
-
-		      if(this.pages < 2){
-			for(let i = 0; i<this.pagination.length; i++){
-		           this.pagination[i].classList.remove('pagination_hidden');
+                this.updateFirst(page,pages);
+	            this.updatePrev(page,pages);
+	            this.updateCurrent(page,pages);
+	            this.updateNext(page,pages);
+	            this.updateLast(page,pages);
+    		    if(this.pages < 2){
+			      for(let i = 0; i<this.pagination.length; i++){
+		             this.pagination[i].classList.remove('pagination_hidden');
+		          }
 		        }
-		      }
 		    }
 
-	            this.pages=pages;
-	            this.page=page;		  
+	        this.pages=pages;
+	        this.page=page;		  
 		  };
 
 
-                 updateFirst(page,pages) {
+            updateFirst(page,pages) {
 		    if(page == 1){
 		       for(let i =0; i<this.first.length; i++){
 		          this.first[i].classList.add('pagination__item_hidden');
 		       }
 		    }else{
-		       for(let i =0; i<this.first.length; i++){
-			  let p = this.first[i];
-		          p.classList.remove('pagination__item_hidden');
-			  p.dataset.page=1;     
-		       }
+		      for(let i =0; i<this.first.length; i++){
+			    let p = this.first[i];
+		        p.classList.remove('pagination__item_hidden');
+			    p.dataset.page=1;     
+		      }
 		    }
 		  };
 
-	          updatePrev(page,pages){
-		      if(page > 2){
-			for(let i = 0; i<this.prev.length; i++){
-			   this.prev[i].classList.remove('pagination__item_hidden');
-			   this.prev[i].href= link(page-1,sortby,sort);
-			   this.prev[i].innerText=page-1;
-			   this.prev[i].dataset.p=page-1;
-		        }
-		      }else{
-		        for(let i = 0; i<this.prev.length;i++){
-			  this.prev[i].classList.add('pagination__item_hidden');
-			}
+	      updatePrev(page,pages){
+		    if(page > 2){
+			  for(let i = 0; i<this.prev.length; i++){
+			    this.prev[i].classList.remove('pagination__item_hidden');
+			    this.prev[i].href= link(page-1,sortby,sort);
+			    this.prev[i].innerText=page-1;
+			    this.prev[i].dataset.p=page-1;
 		      }
+		    }else{
+		      for(let i = 0; i<this.prev.length;i++){
+			    this.prev[i].classList.add('pagination__item_hidden');
+			  }
+		    }
 		   }
 	          
-	           updateCurrent(page, pages){
+	      updateCurrent(page, pages){
 		     for(let i =0; i<this.current.length;i++){
 		       this.current[i].href=link(page,sortby,sort);
 		       this.current[i].innerText=page;	     
@@ -255,52 +252,50 @@
 		   
 		   };
 	           		  
-	           updateNext (page,pages){
-		      if(page < pages -1){
-			for(let i = 0; i<this.next.length; i++){
+	      updateNext (page,pages){
+		   if(page < pages -1){
+			 for(let i = 0; i<this.next.length; i++){
 			   this.next[i].classList.remove('pagination__item_hidden');
 			   this.next[i].href= link((page|0)+1,sortby,sort);
 			   this.next[i].innerText = (page|0)+1;
 			   this.next[i].dataset.page=(page|0)+1;	
-		        }
-		      }else{
-		        for(let i = 0; i<this.next.length;i++){
-			  this.next[i].classList.add('pagination__item_hidden');
-			}
-		      }
+		     }
+		    }else{
+		      for(let i = 0; i<this.next.length;i++){
+			    this.next[i].classList.add('pagination__item_hidden');
+			  }
+		    }
 		   }
 	          
-	           updateLast(page,pages){
-		      if(page < pages){
-			for(let i = 0; i<this.last.length; i++){
+	      updateLast(page,pages){
+		    if(page < pages){
+			  for(let i = 0; i<this.last.length; i++){
 			   this.last[i].classList.remove('pagination__item_hidden');
 			   this.last[i].href= link(pages,sortby,sort);
 			   this.last[i].innerText = pages;
-		           this.last[i].dataset.page=pages;		
-		        }
-		      }else{
-		        for(let i = 0; i<this.last.length;i++){
-			  this.last[i].classList.add('pagination__item_hidden');
-			}
+		       this.last[i].dataset.page=pages;		
 		      }
+		    }else{
+		      for(let i = 0; i<this.last.length;i++){
+			    this.last[i].classList.add('pagination__item_hidden');
+			  }
+		    }
 		   };
 
 		}
-                var sortRow=document.getElementsByClassName('sort__row')[0];
-                var sortLink=document.getElementsByClassName('sort__link');
-                for(let i = 0; i<sortLink.length;i++){
-                  sortLink[i].addEventListener('click',function(e){
-                    e.preventDefault();
+        var sortRow=document.getElementsByClassName('sort__row')[0];
+        var sortLink=document.getElementsByClassName('sort__link');
+        for(let i = 0; i<sortLink.length;i++){
+            sortLink[i].addEventListener('click',function(e){
+            e.preventDefault();
 		    var sorted=e.target.dataset.sortby;
-	            var order=(sortby==sorted)?((sort=='asc')?'desc':'asc'):"desc";
+	        var order=(sortby==sorted)?((sort=='asc')?'desc':'asc'):"desc";
 		    sortby = sorted;
 		    sort = order;	  
 		    load(1,sorted,order);
-		    	  
-		    	  
-                  })
-                }
-                list.addEventListener('click',function(e){
+            })
+        }
+        list.addEventListener('click',function(e){
 		  e.preventDefault();
 		  if(e.target.tagName="INPUT" &&e.target.type=="submit"){
 		    var par= e.target.parentElement.parentElement;
@@ -310,8 +305,8 @@
 		      text:par.getElementsByTagName('textarea')[0].value,
 		      status:par.getElementsByTagName('select')[0].value
 		    }	  
-		    fetch(`index.php/api/notes/${id}`, {
-			method:'PUT',
+		    return fetch(`index.php/api/notes/${id}`, {
+			method:'POST',
 			body:JSON.stringify(formData),
 			credentials:"include",    
 			headers:{
@@ -319,11 +314,17 @@
 			}      
 		    	  
 		    }).then(x=>{
-		      console.log(x);
+		      switch(x.status){
+                  case 403: 
+                     login.classList.remove('container_hidden');
+                     break;
+                  
+              }
 		    })
 		  }	  
 		})
-                var addForm=document.getElementsByClassName('add_form');
+
+        var addForm=document.getElementsByClassName('add_form');
 		for(let i=0;i<addForm.length;i++){
 		  addForm[i].addEventListener('submit',function(e){
 		    e.preventDefault();  
@@ -333,12 +334,12 @@
 		        text:e.target.elements.namedItem('text').value,
 		        
 		      }
-		      fetch('index.php/api/notes', {
-			method:'POST',
-			body:JSON.stringify(formData),
-			headers:{
-			  'Content-Type': 'application/json'
-			}      
+		      return fetch('index.php/api/notes', {
+			    method:'POST',
+			    body:JSON.stringify(formData),
+			    headers:{
+			      'Content-Type': 'application/json'
+			    }      
 		     }).then(()=>{
 		        load(page,sortby,sort);
 		     })
@@ -352,35 +353,38 @@
 		        login:e.target.elements.namedItem('login').value,
 		        password:e.target.elements.namedItem('password').value,
 		      }
-		      fetch('index.php/api/login', {
-			method:'POST',
-			body:JSON.stringify(formData),
-			headers:{
-			  'Content-Type': 'application/json'
-			}      
+		      return fetch('index.php/api/login', {
+			    method:'POST',
+			    body:JSON.stringify(formData),
+			    headers:{
+			      'Content-Type': 'application/json'
+			    }      
 		      }).then(x=>{
+                var oldeditable=editable;  
 		        if(x.status==200){
-			  editable=true;
-			  document.getElementsByClassName('container__login')[0].classList.add('container_hidden');
-			}else{
-			  editable=false;
-			  document.getElementsByClassName('container__login')[0].classList.remove('container_hidden');
-			}
-			renderList(data.data);      
+			      document.getElementsByClassName('container__login')[0].classList.add('container_hidden');
+                  if(!editable){
+                    editable=true;
+                    renderList(data.data);
+                   }
+			    }else{
+			      document.getElementsByClassName('container__login')[0].classList.remove('container_hidden');
+			    }
+			
 		      })
 		    })
 		 }	
-                function load(page,sortby,sort){
-		
+
+         function load(page,sortby,sort){
 		    fetch('/index.php/api/notes'+link(page,sortby,sort)).then(resp => resp.text()).then(txt=>{
-		        data = JSON.parse(txt);
-			console.log(data);
-			pgn.update(data.page,data.pages);
-			if(data.pages==0){
+    	        data = JSON.parse(txt);
+	     		console.log(data);
+			    pgn.update(data.page,data.pages);
+			    if(data.pages==0){
 		          renderEmptyList();  
-			}else{
-			  renderList(data.data);
-			}
+			    }else{
+			      renderList(data.data);
+			    }
 		    });
 		}
 		document.addEventListener('DOMContentLoaded', function(){
