@@ -85,7 +85,8 @@
                 var login = document.getElementsByClassName('container__login')[0];
                 var page = 1;
                 var editable=false;
-                var pgn;                
+                var pgn;
+               
                 function item(strings ){
 	             
 		        }
@@ -149,14 +150,15 @@
 			   tr.appendChild(td2);
 			   tr.appendChild(td3);
 			   tr.appendChild(td4);
-		           if(editable){
+		       if(editable){
 			     var td6=document.createElement('td');
 			     var tx6=document.createElement('input')
-		             tx6.type="submit";
+		         tx6.type="submit";
 			     tx6.value="save";
 			     td6.className="notes__edit";
 			     td6.appendChild(tx6);
 			     tr.append(td6);
+                 sortRow.cells[sortRow.cells.length-1].colSpan=2;
 			   }	   
 			   list.appendChild(tr);
 			  });
