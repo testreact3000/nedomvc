@@ -17,7 +17,7 @@ class Request {
     $this->path = empty($path)?"/":$path;
     $this->path = explode('/', $this->path);
     parse_str($query,$this->query);
-    $this->order = (empty($this->query['sort'])||$this->query['sort']!='asc')?'desc':'asc';
+    $this->order = (empty($this->query['order'])||$this->query['order']!='asc')?'desc':'asc';
     if(empty($this->query['orderby'])){
       $this->orderby="id";
     }
@@ -63,6 +63,7 @@ class Request {
   }
 
   public function getMethod(){
+      
      return $this->method;
   }
 
