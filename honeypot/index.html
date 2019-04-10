@@ -356,11 +356,11 @@ body{
   <div class='container container_img'>
     <img src='img/envelope.png' class='envelope' >
   </div>
-<form>
+<form method="POST" class='add_form'>
   <div class='container container_form'>
-     <label class="form-item form-item_name"> <input class='form-input' type="text" required><div class="label">Имя</div></label>
-    <label class="form-item form-item_email"> <input class='form-input'type="email" required><div class="label">E-Mail</div></label>
-     <label class="form-item form-item_comment"> <textarea class='form-input' required></textarea><div class="label">Комментарий</div></label>
+     <label class="form-item form-item_name"> <input class='form-input' type="text" required name="name"><div class="label">Имя</div></label>
+    <label class="form-item form-item_email"> <input class='form-input'type="email" required name="email"><div class="label">E-Mail</div></label>
+     <label class="form-item form-item_comment"> <textarea class='form-input' required name="text"></textarea><div class="label">Комментарий</div></label>
   </div>
   <div class='container container_submit'>
     <input type="submit" value="Записать" class='btn-danger'>
@@ -421,6 +421,72 @@ As let you else be loved by any man.</div>
 
 </div>
 </footer>
+<script>
+       var url="/index.php/api/notes";
+       var page=1;
+       
+       function link(page){
+	 return `?page=${page}&orderby=id&order=desc`;
+       }
+       function renderEmptyList(){
+       }
+       function renderList(data){
+          return data.map(renderItem);
+       }
+      function htmlToElements(html) {
+        var template = document.createElement('template');
+        template.innerHTML = html;
+        return template.content.childNodes;
+      }
 
+     function renderItem(x,id){
+    return `<li class='comment-list__item comment ${(id%2==0)?'comment_even':''}'>
+     <div class='comment__title align-content'><div class='comment__title-content'>${x.name}</div></div>
+     <div class='comment__email align-content'><div class=comment__email-content>${x.email}</div></div>
+     <div class='comment__comment'>${x.text}</div>
+    </li>`;
+       }
+     function load(page){
+                   return fetch(url+link(page))
+                     .then(resp => resp.text())
+                     .then( txt => JSON.parse(txt))
+                     .then( function(data){ let done= data.page==data.pages; return {value: data,done: done };})
+     }
+     async function loadAll(page=1, result=[]){
+          var res = await load(page);
+          var res2 = [...result,...res.value.data];
+          if(res.done){
+             return res2;
+          }else{
+             return loadAll((res.value.page|0)+1,res2);
+          }
+     }
+        var addForm=document.getElementsByClassName('add_form');
+		for(let i=0;i<addForm.length;i++){
+		  addForm[i].addEventListener('submit',function(e){
+		    e.preventDefault();  
+		      var formData = {
+		        name:e.target.elements.namedItem('name').value,
+		        email:e.target.elements.namedItem('email').value,
+		        text:e.target.elements.namedItem('text').value,
+		        
+		      }
+		      return fetch(url, {
+			    method:'POST',
+			    body:JSON.stringify(formData),
+			    headers:{
+			      'Content-Type': 'application/json'
+			    }      
+		     }).then(()=>{
+		        loadAll().then(renderList).then(x=>{
+                           document.getElementsByClassName('comment-list')[0].innerHTML=x.join('');
+                           document.getElementsByName('name')[0].value='';
+                           document.getElementsByName('email')[0].value='';
+                           document.getElementsByName('text')[0].value='';
+                        });
+		     })
+		  })
+		}
+</script>
 </body>
 </html>
