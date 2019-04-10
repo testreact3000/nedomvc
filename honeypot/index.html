@@ -1,0 +1,426 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>HoneyHunter</title>
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+<link href="https://fonts.googleapis.com/css?family=Roboto:400,500,700&amp;subset=cyrillic" rel="stylesheet">
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous"> 
+
+
+<style>
+ :root{
+   --header-bg-color:#2d3136;
+   --list-bg-color:#f6f6f7;
+   --footer-bg-color:#2a2d33;
+   --text-bg-color:#2f3338;
+   --text-color: white;
+   --comment-bg-color: #e9eef3;
+ }
+.container{
+  
+}
+html{
+  height: 100%;
+}
+body{
+  margin:0;
+  height:100%;
+  display: flex;
+  flex-direction: column;
+ }
+.header{
+  /*height:1157px;*/
+  background-color:var(--header-bg-color);
+  flex-shrink:0;
+  display: flex;
+  flex-direction: column;
+}
+.header__logo{
+  width:291px;
+  margin-top:55px;
+  margin-left: -3px;
+
+}
+.envelope{
+  margin-left: 33.3%;
+  margin-top: 82px;
+}
+.container_form{
+  padding-top:27px;
+  margin-bottom: 91px;
+  display: flex;
+  flex-direction: column;
+  height:420px;
+  flex-wrap:wrap;
+  align-content: space-between;
+
+}
+.label{
+  display: flex;
+  flex-direction: row;
+  font-family: 'Roboto', sans-serif;
+  font-weight: 500;
+  font-size: 34px;
+  color: rgb(215, 215, 215);
+  margin-left: -2px;
+  align-items: center;
+  margin-bottom: 13px;
+  
+}
+[required]+.label:after{
+  display:block;
+  content:'*';
+  font-family: 'Roboto', sans-serif;
+  font-weight: 500;
+  font-size: 40px;
+  line-height: 34px;
+  margin-left: 13px;
+  margin-bottom: -6px;
+  color: rgb(190,57,59);
+
+}
+
+.form-item{
+  margin-left: -13px;
+  width: 41.66%;
+  width: calc( 41.66% - 15px);
+  display: flex;
+  flex-direction: column-reverse;
+}
+.form-input{
+  font-family: 'Roboto', sans-serif;
+  font-weight: 400;
+  font-size: 29px;
+  padding-left:19px;
+  padding-right:19px;
+
+}
+.form-item input{
+  height: 94px;
+  background-color: var(--text-bg-color);
+  border:none;
+  color: var(--text-color);
+}
+.form-item textarea{
+  height: 315px;
+  background-color: var(--text-bg-color);
+  border: none;
+  color: var(--text-color);
+}
+.form-item_comment{
+ 
+  margin-right: -7px;
+  width: 50%;
+  width: calc(50% - 15px);
+}
+.form-item_name{
+  margin-bottom: 64px;
+}
+.container_submit{
+ display: flex;
+ flex-direction: row-reverse;
+ padding-bottom: 94px;
+}
+.container_submit [type="submit"]{
+  width: 218px;
+  margin-right: -5px;
+  height: 88px;
+  font-family: 'Roboto', sans-serif;
+  font-weight: 500;
+  font-size: 34px;
+  color: white;
+
+}
+.list{
+/*  height: 1266px;*/
+  background-color: var(--list-bg-color);
+  border-top:1px solid var(--list-bg-color);
+  flex-grow: 1;
+  flex-shrink:0;
+}
+.footer{
+  background-color: var(--footer-bg-color);
+  height:137px;
+  flex-shrink:0;
+}
+.envelope{
+  width: 25%;
+  width: calc(25% - 11px);
+}
+
+.list h1{
+     
+     font-family: 'Roboto', sans-serif;
+     font-weight: 700;
+     font-size: 40px;
+     margin-top: 127px;
+     letter-spacing: 0.1px;
+     word-spacing: 3px;
+     color: rgb(55,65,78);
+     text-align: center;
+     transform: translateX(-19px);
+     margin-bottom: 122px;
+}
+.comment-list{
+
+  padding: 0;
+  margin:0;
+  list-style-type: none;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  justify-items: center;
+  margin: 0 -15px;
+  
+}
+
+.comment-list__item{
+  
+  width: 313px;
+  height: 386px;
+ 
+  margin-bottom: 64px;
+}
+ .comment{
+  background-color: var(--comment-bg-color);
+  border-radius: 5px 5px 0 0;
+  color: #767582;
+  overflow: hidden;
+}
+
+.comment.comment_even .comment__title{
+  background-color: #58ad52;
+ }
+.comment.comment_even .comment__email{
+  color: #58ad52;
+  background-color: #deebdf;
+}
+.comment.comment_even .comment__comment{
+  color: #768275;
+  background-color: #deebdf;
+}
+ .comment__title{
+
+    height: 80px;
+    background-color: #4b596c;
+    color: white;
+    display: flex;
+    flex-direction: column;
+ }
+ .comment__title-content{
+    overflow: hidden;
+    text-overflow: ellipsis;
+    text-align: center;
+    font-family: 'Roboto', sans-serif;
+    font-weight: 500;
+    font-size: 34px;
+    line-height: 38px;
+    padding-left: 15px;
+    padding-right: 15px;
+ 
+ }
+.comment__email{
+
+    height: 130px;
+    display: flex;
+    flex-direction: column;
+}
+.comment__email-content{
+  font-family: 'Roboto', sans-serif;
+  font-weight: 700;
+  font-size: 31px;
+  letter-spacing: 0.6px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  text-align:center;
+  word-wrap: break-word;
+  line-height: 36px;  
+  padding-left: 15px;
+  padding-right: 15px;
+}
+.align-content::before, 
+.align-content::after {
+  content: '';  /* Insert pseudo-element */
+  margin: auto; /* Make it push flex items to the center */
+}
+
+ .comment__comment{
+  font-family: 'Roboto', sans-serif;
+  font-weight: 500;
+  font-size: 29px;
+  text-align: center;
+  letter-spacing: -0.6px;
+  line-height: 29px;
+  overflow: auto;
+  padding: 0 15px;
+  height: 174px;
+  word-wrap: break-word;
+ }
+
+.footer{
+  display: flex;
+  
+}
+.footer__logo{
+  margin-top: 37px;
+  margin-left: -5px;
+  height: 48px;
+  float: left;
+}
+.footer__link{
+  float:right;
+  background-color: #2f3338;
+  color: #656566;
+  text-decoration: none;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  
+  margin-top: 43px;
+  margin-left: 30px;
+  font-size: 23px;
+  line-height: 40px;
+}
+.footer__link:visited{
+  color: #656566;
+  text-decoration: none;
+}
+.footer__link:active{
+  color: white;
+  text-decoration: none;
+
+}
+.footer__link:hover{
+  color: #656566;
+  text-decoration: none;
+}
+.footer__link_f{
+  margin-right: 1.1%;
+  padding-left: 15px;
+}
+.footer__link_vk{
+  margin-right: 2.19%;
+  padding-left: 5px;
+}
+@media screen and (max-width: 991px) {
+  .comment-list{
+    grid-template-columns: 1fr 1fr;
+    
+  }
+}
+@media screen and (max-width: 767px) {
+  .container_img{
+    text-align: center;
+  }
+  .envelope{
+     width: 161px;
+     margin-left:auto;
+  }
+  .container_form {
+    height: auto;
+    align-content: center;
+  }
+  .form-item{
+     width: 100%;
+     margin-left: auto;
+  }
+  .form-item_email{
+    margin-bottom: 64px;
+  }
+   
+  .form-item_comment{
+     width: 100%;
+   }
+
+  .comment-list{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+
+}
+
+
+
+   
+  
+}
+</style>
+</head>
+<body>
+<section class='header'>
+  <div class='container container_logo'>
+    <img src='img/logo2.png' alt="HoneyHunter" class='header__logo'>
+  </div>
+  <div class='container container_img'>
+    <img src='img/envelope.png' class='envelope' >
+  </div>
+<form>
+  <div class='container container_form'>
+     <label class="form-item form-item_name"> <input class='form-input' type="text" required><div class="label">Имя</div></label>
+    <label class="form-item form-item_email"> <input class='form-input'type="email" required><div class="label">E-Mail</div></label>
+     <label class="form-item form-item_comment"> <textarea class='form-input' required></textarea><div class="label">Комментарий</div></label>
+  </div>
+  <div class='container container_submit'>
+    <input type="submit" value="Записать" class='btn-danger'>
+   
+  </div>
+</form>
+</section>
+<section class='list'>
+  <div class='container'>
+    <h1>Выводим комментарии</h1>
+    
+    <ul class='comment-list'>
+    <li class='comment-list__item comment '>
+     <div class='comment__title align-content'><div class='comment__title-content'>Вася</div></div>
+     <div class='comment__email align-content'><div class=comment__email-content>vasya@mail.ru</div></div>
+     <div class='comment__comment'>Сообщение от<br>Василия Пупкина.</div>
+    </li>
+    <li class='comment-list__item comment comment_even'>
+     <div class='comment__title align-content'><div class='comment__title-content'>Маруся</div></div>
+     <div class='comment__email align-content'><div class=comment__email-content>marysya@mail.ru</div></div>
+     <div class='comment__comment'>Всем привет,<br>я Маруся</div>
+    </li>    
+    <li class='comment-list__item comment'>
+     <div class='comment__title align-content'><div class='comment__title-content'>Одинадцатиклассница</div></div>
+     <div class='comment__email align-content'><div class=comment__email-content>odinadcaticlassnica@lost.in.new.york.com</div></div>
+     <div class='comment__comment'>I loved you: and, it may be, from my soul
+The former love has never gone away,
+But let it not recall to you my dole;
+I wish not sadden you in any way.
+
+I loved you silently, without hope, fully,
+In diffidence, in jealousy, in pain;
+I loved you so tenderly and truly,
+As let you else be loved by any man.</div>
+    </li>    
+    <li class='comment-list__item comment comment_even'>
+     <div class='comment__title align-content'><div class='comment__title-content'>Остап-Сулейман-Берта-Мария-Бендер-бей</div></div>
+     <div class='comment__email align-content'><div class=comment__email-content>ostap.suleiman.berta.maria.bender.bey@gold.inc</div></div>
+     <div class='comment__comment'></div>
+    </li>    
+    <li class='comment-list__item comment '>
+     <div class='comment__title align-content'><div class='comment__title-content align-content'>Петя</div></div>
+     <div class='comment__email align-content'><div class=comment__email-content>petya@ya.ru</div></div>
+     <div class='comment__comment'></div>
+    </li>
+    </ul>
+</div>
+</section>
+<footer class='footer'>
+
+<div class='container'>
+
+<img src='img/logo2.png' alt="HoneyHunter" height=48 class='footer__logo '>
+
+<a href="#" class='footer__link footer__link_f fab fa-facebook-f'></a>
+<a href="#" class='footer__link footer__link_vk fab fa-vk'></a>
+
+
+</div>
+</footer>
+
+</body>
+</html>
